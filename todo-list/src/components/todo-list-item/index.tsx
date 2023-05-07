@@ -2,6 +2,7 @@ import * as React from "react";
 import { Button } from "../../shared-components/button";
 import { ToDoListItemModel } from "../../models/todo-list-item";
 import { CheckBox } from "../../shared-components/check-box";
+import "./index.css";
 
 interface IProps {
   item: ToDoListItemModel;
@@ -17,6 +18,10 @@ export const ToDoListItem: React.FC<IProps> = (props) => {
     color: item.important ? "red" : "black",
   };
 
+  const className = `${item.important ? "red" : "black"} ${
+    item.done && "crossed"
+  }`;
+
   const checkBoxClickHandler = (newValue: boolean) => {
     markAsDoneHandler(item.id, newValue);
   };
@@ -26,12 +31,17 @@ export const ToDoListItem: React.FC<IProps> = (props) => {
       <span>
         <CheckBox checked={item.done} onChangeHandler={checkBoxClickHandler} />
       </span>
-      <span style={importantStyle}>{item.label}</span>
+      <span className={className}>{item.label}</span>
       <span>
-        <Button value="Delete" onClickHandler={() => deleteItemHandler(item)} />
+        <Button
+          className="btn btn-danger"
+          value="Delete"
+          onClickHandler={() => deleteItemHandler(item)}
+        />
       </span>
       <span>
         <Button
+          className="btn btn-warning"
           value="Important"
           onClickHandler={() => importantItemHandler(item.id, !item.important)}
         />

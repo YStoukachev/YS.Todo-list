@@ -1,4 +1,3 @@
-import { ButtonStyles } from "../../enums/button-style";
 import { ToDoListItemModel } from "../../models/todo-list-item";
 import { Button } from "../../shared-components/button";
 import { TextInput } from "../../shared-components/text-input";
@@ -18,15 +17,18 @@ export const Actions: React.FC<IProps> = (props) => {
 
   return (
     <div>
-      <TextInput
-        placeHolder="Add some deal..."
-        value={label}
-        onChangeHandler={updateLabel}
-      />
-      <div>
+      <span>
+        <TextInput
+          placeHolder="Add some deal..."
+          value={label}
+          onChangeHandler={updateLabel}
+        />
+      </span>
+
+      <span>
         <Button
           value="Add"
-          buttonStyle={ButtonStyles.addButton}
+          className="btn btn-success"
           onClickHandler={() => {
             addItemToListHandler({
               id: crypto.randomUUID(),
@@ -37,7 +39,7 @@ export const Actions: React.FC<IProps> = (props) => {
             updateLabel("");
           }}
         />
-      </div>
+      </span>
     </div>
   );
 };

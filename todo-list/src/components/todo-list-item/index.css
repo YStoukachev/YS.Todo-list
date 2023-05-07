@@ -1,0 +1,11 @@
+.red {
+  color: red;
+}
+
+.black {
+  color: black;
+}
+
+.crossed {
+  text-decoration: line-through;
+}

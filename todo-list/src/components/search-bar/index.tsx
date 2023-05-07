@@ -1,6 +1,7 @@
 import * as React from "react";
 import { TextInput } from "../../shared-components/text-input";
 import { Button } from "../../shared-components/button";
+import "./index.css";
 
 interface IProps {
   searchHandler(label: string): void;
@@ -32,23 +33,30 @@ export const SearchBar: React.FC<IProps> = (props) => {
           onChangeHandler={updateSearchLabel}
         />
       </span>
-      <span>
-        <Button value="All" onClickHandler={() => showAllTasksHandler()} />
-      </span>
-      <span>
+      <span className="margin-left">
         <Button
+          className="btn btn-primary"
+          value="All"
+          onClickHandler={() => showAllTasksHandler()}
+        />
+      </span>
+      <span className="margin-left">
+        <Button
+          className="btn btn-primary"
           value="Active"
           onClickHandler={() => showDoneTasksHandler(false)}
         />
       </span>
-      <span>
+      <span className="margin-left">
         <Button
+          className="btn btn-primary"
           value="Done"
           onClickHandler={() => showDoneTasksHandler(true)}
         />
       </span>
-      <span>
+      <span className="margin-left">
         <Button
+          className="btn btn-primary"
           value="Important"
           onClickHandler={() => showImportantTasksHandler(true)}
         />
