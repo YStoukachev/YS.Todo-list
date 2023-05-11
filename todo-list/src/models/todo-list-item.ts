@@ -1,4 +1,4 @@
-export interface ToDoListItemModel {
+export interface IToDoListItemModel {
   id: string;
   label: string;
   important: boolean;

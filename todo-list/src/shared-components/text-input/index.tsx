@@ -4,12 +4,12 @@ import "./index.css";
 interface IProps {
   placeHolder?: string;
   value?: string;
-  onChangeHandler(value: string): void;
+  onChange(value: string): void;
   className?: string;
 }
 
 export const TextInput: React.FC<IProps> = (props) => {
-  const { placeHolder = undefined, value = "", onChangeHandler } = props;
+  const { placeHolder = undefined, value = "", onChange } = props;
 
   return (
     <input
@@ -17,7 +17,7 @@ export const TextInput: React.FC<IProps> = (props) => {
       className="text-input"
       placeholder={placeHolder}
       value={value}
-      onChange={(event) => onChangeHandler(event.target.value)}
+      onChange={(event) => onChange(event.target.value)}
     />
   );
 };

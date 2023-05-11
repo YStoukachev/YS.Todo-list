@@ -1,99 +1,74 @@
 import * as React from "react";
-import { ToDoListItemModel } from "../models/todo-list-item";
+import { IToDoListItemModel } from "../models/todo-list-item";
+import { useCallback } from "react";
+
+export interface ITodoListFilter {
+  label?: string;
+  onlyDone?: boolean;
+  onlyImportant?: boolean;
+  onlyActive?: boolean;
+}
 
 export const useToDoList = () => {
-  const [toDoList, updateToDoList] = React.useState<ToDoListItemModel[]>([]);
-  const [toDoListProjection, updateToDoListProjection] = React.useState<
-    ToDoListItemModel[]
-  >([]);
+  const [toDoList, setTodoList] = React.useState<IToDoListItemModel[]>([]);
+  const [filters, setFilters] = React.useState<ITodoListFilter>({});
 
-  const addItemToList = (item: ToDoListItemModel) => {
-    updateToDoList((list) => [...list, item]);
-    updateToDoListProjection((list) => [...list, item]);
-  };
+  const filteredList = React.useMemo(() => {
+    return toDoList.filter((item) => {
+      let isValid = true;
 
-  const deleteItemFromList = (item: ToDoListItemModel) => {
-    updateToDoList((list) => list.filter((x) => x.id !== item.id));
-    updateToDoListProjection((list) => list.filter((x) => x.id !== item.id));
-  };
+      if (isValid && item.label) {
+        isValid = item.label.toLocaleLowerCase().includes(filters.label || "");
+      }
 
-  const markItemAsImportant = (id: string, newValue: boolean) => {
-    updateToDoList((list) => updateImportantProp(list, id, newValue));
-    updateToDoListProjection((list) => updateImportantProp(list, id, newValue));
-  };
+      if (isValid) {
+        isValid = filters.onlyDone ? item.done : true;
+      }
 
-  const updateImportantProp = (
-    items: ToDoListItemModel[],
-    id: string,
-    newValue: boolean
-  ) => {
-    const itemIndexToUpdate = items.findIndex((x) => x.id === id);
-    const updatedItem: ToDoListItemModel = {
-      ...items[itemIndexToUpdate],
-      important: newValue,
-    };
-    const updatedItems = [...items];
-    updatedItems[itemIndexToUpdate] = updatedItem;
+      if (isValid) {
+        isValid = filters.onlyActive ? !item.done : true;
+      }
 
-    return updatedItems;
-  };
+      if (isValid) {
+        isValid = filters.onlyImportant ? item.important : true;
+      }
 
-  const updateDoneProp = (
-    items: ToDoListItemModel[],
-    id: string,
-    newValue: boolean
-  ) => {
-    const itemIndexToUpdate = items.findIndex((x) => x.id === id);
-    const updatedItem: ToDoListItemModel = {
-      ...items[itemIndexToUpdate],
-      done: newValue,
-    };
-    const updatedItems = [...items];
-    updatedItems[itemIndexToUpdate] = updatedItem;
+      return isValid;
+    });
+  }, [JSON.stringify(filters), toDoList]);
 
-    return updatedItems;
-  };
+  const setToDoFilters = (filter: Partial<ITodoListFilter>) =>
+    setFilters((prevState) => ({ ...prevState, ...filter }));
+  const resetFilters = () => setFilters({});
 
-  const markItemAsDone = (id: string, newValue: boolean) => {
-    updateToDoList((list) => updateDoneProp(list, id, newValue));
-    updateToDoListProjection((list) => updateDoneProp(list, id, newValue));
-  };
+  const updateItem = useCallback(
+    (id: string, updates: Partial<Omit<IToDoListItemModel, "id">>) => {
+      const updatedList = toDoList.map((item) =>
+        item.id === id ? { ...item, ...updates, id: item.id } : item
+      );
 
-  const searchInToDoList = (label: string) => {
-    const toDoListCopy = [...toDoList];
+      setTodoList(updatedList);
+    },
+    [toDoList]
+  );
 
-    updateToDoListProjection(
-      toDoListCopy.filter((x) => x.label.startsWith(label))
-    );
-  };
+  const addItem = useCallback(
+    (model: IToDoListItemModel) => setTodoList([...toDoList, model]),
+    [toDoList]
+  );
 
-  const showImportantTasks = (isImportant: boolean) => {
-    const toDoListCopy = [...toDoList];
-
-    updateToDoListProjection(
-      toDoListCopy.filter((x) => x.important === isImportant)
-    );
-  };
-
-  const showDoneTasks = (isDone: boolean) => {
-    const toDoListCopy = [...toDoList];
-
-    updateToDoListProjection(toDoListCopy.filter((x) => x.done === isDone));
-  };
-
-  const showAllTasks = () => {
-    updateToDoListProjection([...toDoList]);
-  };
+  const deleteItem = useCallback(
+    (id: string) => setTodoList(toDoList.filter((item) => item.id !== id)),
+    [toDoList]
+  );
 
   return {
-    toDoListProjection,
-    addItemToList,
-    deleteItemFromList,
-    markItemAsImportant,
-    markItemAsDone,
-    searchInToDoList,
-    showImportantTasks,
-    showDoneTasks,
-    showAllTasks,
+    filteredList,
+    filters,
+    addItem,
+    setToDoFilters,
+    resetFilters,
+    deleteItem,
+    updateItem,
   };
 };

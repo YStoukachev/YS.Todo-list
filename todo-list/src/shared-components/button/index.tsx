@@ -2,18 +2,18 @@ import * as React from "react";
 
 interface IProps {
   value: string;
-  onClickHandler(): void;
+  onClick(): void;
   className?: string;
 }
 
 export const Button: React.FC<IProps> = (props) => {
-  const { value: buttonName, onClickHandler, className } = props;
+  const { value: buttonName, onClick, className } = props;
 
   return (
     <input
       type="button"
       value={buttonName}
-      onClick={onClickHandler}
+      onClick={onClick}
       className={className}
     />
   );

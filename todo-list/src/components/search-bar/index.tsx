@@ -2,63 +2,71 @@ import * as React from "react";
 import { TextInput } from "../../shared-components/text-input";
 import { Button } from "../../shared-components/button";
 import "./index.css";
+import { ITodoListFilter } from "../../hooks/todo-list-hook";
 
 interface IProps {
-  searchHandler(label: string): void;
-  showDoneTasksHandler(isDone: boolean): void;
-  showImportantTasksHandler(isImportant: boolean): void;
-  showAllTasksHandler(): void;
+  filters: ITodoListFilter;
+  onFilterChanges: (filter: Partial<ITodoListFilter>) => void;
+  onResetFilters: () => void;
 }
 
 export const SearchBar: React.FC<IProps> = (props) => {
-  const {
-    searchHandler,
-    showDoneTasksHandler,
-    showAllTasksHandler,
-    showImportantTasksHandler,
-  } = props;
-  const [searchLabel, setSearchLabel] = React.useState<string>("");
+  const { onFilterChanges, filters, onResetFilters } = props;
 
-  const updateSearchLabel = (value: string) => {
-    setSearchLabel(value);
-    searchHandler(value);
-  };
+  const createFilterValueHandler =
+    (key: keyof ITodoListFilter) => (value?: any) => {
+      if (key === "label") {
+        onFilterChanges({ label: value || "" });
+      }
+
+      if (key === "onlyActive") {
+        onFilterChanges({ onlyActive: true, onlyDone: false });
+      }
+
+      if (key === "onlyDone") {
+        onFilterChanges({ onlyDone: true, onlyActive: false });
+      }
+
+      if (key === "onlyImportant") {
+        onFilterChanges({ onlyImportant: true });
+      }
+    };
 
   return (
     <div>
       <span>
         <TextInput
-          value={searchLabel}
+          value={filters.label || ""}
           placeHolder="Type to search something..."
-          onChangeHandler={updateSearchLabel}
+          onChange={createFilterValueHandler("label")}
         />
       </span>
       <span className="margin-left">
         <Button
           className="btn btn-primary"
           value="All"
-          onClickHandler={() => showAllTasksHandler()}
+          onClick={onResetFilters}
         />
       </span>
       <span className="margin-left">
         <Button
           className="btn btn-primary"
           value="Active"
-          onClickHandler={() => showDoneTasksHandler(false)}
+          onClick={createFilterValueHandler("onlyActive")}
         />
       </span>
       <span className="margin-left">
         <Button
           className="btn btn-primary"
           value="Done"
-          onClickHandler={() => showDoneTasksHandler(true)}
+          onClick={createFilterValueHandler("onlyDone")}
         />
       </span>
       <span className="margin-left">
         <Button
           className="btn btn-primary"
           value="Important"
-          onClickHandler={() => showImportantTasksHandler(true)}
+          onClick={createFilterValueHandler("onlyImportant")}
         />
       </span>
     </div>

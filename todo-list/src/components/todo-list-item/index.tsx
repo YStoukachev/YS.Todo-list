@@ -1,49 +1,46 @@
 import * as React from "react";
 import { Button } from "../../shared-components/button";
-import { ToDoListItemModel } from "../../models/todo-list-item";
+import { IToDoListItemModel } from "../../models/todo-list-item";
 import { CheckBox } from "../../shared-components/check-box";
 import "./index.css";
 
 interface IProps {
-  item: ToDoListItemModel;
-  deleteItemHandler(item: ToDoListItemModel): void;
-  importantItemHandler(id: string, newValue: boolean): void;
-  markAsDoneHandler(id: string, newValue: boolean): void;
+  item: IToDoListItemModel;
+  onDelete: (id: string) => void;
+  onUpdate: (
+    id: string,
+    newValue: Partial<Omit<IToDoListItemModel, "id">>
+  ) => void;
 }
 
 export const ToDoListItem: React.FC<IProps> = (props) => {
-  const { item, deleteItemHandler, importantItemHandler, markAsDoneHandler } =
-    props;
-  const importantStyle = {
-    color: item.important ? "red" : "black",
-  };
+  const { item, onDelete, onUpdate } = props;
 
   const className = `${item.important ? "red" : "black"} ${
     item.done && "crossed"
   }`;
 
-  const checkBoxClickHandler = (newValue: boolean) => {
-    markAsDoneHandler(item.id, newValue);
-  };
-
   return (
     <div>
       <span>
-        <CheckBox checked={item.done} onChangeHandler={checkBoxClickHandler} />
+        <CheckBox
+          checked={item.done}
+          onChange={(done) => onUpdate(item.id, { done })}
+        />
       </span>
       <span className={className}>{item.label}</span>
       <span>
         <Button
           className="btn btn-danger"
           value="Delete"
-          onClickHandler={() => deleteItemHandler(item)}
+          onClick={() => onDelete(item.id)}
         />
       </span>
       <span>
         <Button
           className="btn btn-warning"
           value="Important"
-          onClickHandler={() => importantItemHandler(item.id, !item.important)}
+          onClick={() => onUpdate(item.id, { important: !item.important })}
         />
       </span>
     </div>

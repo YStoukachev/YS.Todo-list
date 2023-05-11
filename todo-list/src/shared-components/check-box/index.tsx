@@ -2,17 +2,17 @@ import * as React from "react";
 
 interface IProps {
   checked: boolean;
-  onChangeHandler(newValue: boolean): void;
+  onChange(newValue: boolean): void;
 }
 
 export const CheckBox: React.FC<IProps> = (props) => {
-  const { checked = false, onChangeHandler } = props;
+  const { checked = false, onChange } = props;
 
   return (
     <input
       type="checkbox"
       checked={checked}
-      onChange={() => onChangeHandler(!checked)}
+      onChange={() => onChange(!checked)}
     />
   );
 };
