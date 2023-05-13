@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./index.css";
 
 interface IProps {
   checked: boolean;
@@ -10,6 +11,7 @@ export const CheckBox: React.FC<IProps> = (props) => {
 
   return (
     <input
+      className="round-checkbox"
       type="checkbox"
       checked={checked}
       onChange={() => onChange(!checked)}

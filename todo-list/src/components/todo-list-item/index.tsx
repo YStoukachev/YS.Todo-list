@@ -16,31 +16,35 @@ interface IProps {
 export const ToDoListItem: React.FC<IProps> = (props) => {
   const { item, onDelete, onUpdate } = props;
 
-  const className = `${item.important ? "red" : "black"} ${
-    item.done && "crossed"
-  }`;
+  const labelClassName = `margin-left col-md-3 ${
+    item.important ? "red" : "black"
+  } ${item.done && "crossed"}`;
 
   return (
-    <div>
+    <div className="row-container">
       <span>
         <CheckBox
           checked={item.done}
           onChange={(done) => onUpdate(item.id, { done })}
         />
       </span>
-      <span className={className}>{item.label}</span>
-      <span>
+      <span className={labelClassName}>{item.label}</span>
+      <span className="margin-left">
         <Button
           className="btn btn-danger"
           value="Delete"
           onClick={() => onDelete(item.id)}
+          isIcon={true}
+          iconType="trash"
         />
       </span>
-      <span>
+      <span className="margin-left">
         <Button
           className="btn btn-warning"
           value="Important"
           onClick={() => onUpdate(item.id, { important: !item.important })}
+          isIcon={true}
+          iconType="warning"
         />
       </span>
     </div>

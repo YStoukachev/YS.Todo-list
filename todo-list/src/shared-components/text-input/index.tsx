@@ -4,20 +4,30 @@ import "./index.css";
 interface IProps {
   placeHolder?: string;
   value?: string;
-  onChange(value: string): void;
+  onChange?: (value: string) => void;
   className?: string;
+  onKeyPressed?: (keyCode: string) => void;
 }
 
 export const TextInput: React.FC<IProps> = (props) => {
-  const { placeHolder = undefined, value = "", onChange } = props;
+  const {
+    placeHolder = undefined,
+    value = "",
+    onChange = () => {},
+    onKeyPressed = () => {},
+    className = "",
+  } = props;
+
+  const combinedClassName = `text-input ${className}`;
 
   return (
     <input
       type="text"
-      className="text-input"
+      className={combinedClassName}
       placeholder={placeHolder}
       value={value}
       onChange={(event) => onChange(event.target.value)}
+      onKeyUp={(event) => onKeyPressed(event.code)}
     />
   );
 };

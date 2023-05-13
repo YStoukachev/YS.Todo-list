@@ -9,3 +9,12 @@
 .crossed {
   text-decoration: line-through;
 }
+
+.maring-left {
+  margin-left: 20px;
+}
+
+.row-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

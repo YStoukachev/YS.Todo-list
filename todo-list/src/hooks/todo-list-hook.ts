@@ -1,17 +1,11 @@
 import * as React from "react";
 import { IToDoListItemModel } from "../models/todo-list-item";
 import { useCallback } from "react";
-
-export interface ITodoListFilter {
-  label?: string;
-  onlyDone?: boolean;
-  onlyImportant?: boolean;
-  onlyActive?: boolean;
-}
+import { IToDoListFilter } from "../models/todo-list-filter";
 
 export const useToDoList = () => {
   const [toDoList, setTodoList] = React.useState<IToDoListItemModel[]>([]);
-  const [filters, setFilters] = React.useState<ITodoListFilter>({});
+  const [filters, setFilters] = React.useState<IToDoListFilter>({});
 
   const filteredList = React.useMemo(() => {
     return toDoList.filter((item) => {
@@ -37,8 +31,8 @@ export const useToDoList = () => {
     });
   }, [JSON.stringify(filters), toDoList]);
 
-  const setToDoFilters = (filter: Partial<ITodoListFilter>) =>
-    setFilters((prevState) => ({ ...prevState, ...filter }));
+  const setToDoFilters = (filter: Partial<IToDoListFilter>) =>
+    setFilters((prevState) => ({ ...filter }));
   const resetFilters = () => setFilters({});
 
   const updateItem = useCallback(
@@ -62,6 +56,11 @@ export const useToDoList = () => {
     [toDoList]
   );
 
+  const clearCompletedTasks = useCallback(
+    () => setTodoList(toDoList.filter((item) => !item.done)),
+    [toDoList]
+  );
+
   return {
     filteredList,
     filters,
@@ -70,5 +69,6 @@ export const useToDoList = () => {
     resetFilters,
     deleteItem,
     updateItem,
+    clearCompletedTasks,
   };
 };

@@ -1,34 +1,35 @@
 import * as React from "react";
-import { TextInput } from "../../shared-components/text-input";
-import { Button } from "../../shared-components/button";
-import "./index.css";
+import { connect } from "react-redux";
+import { IAppState } from "../../redux/app-state";
 import { IToDoListFilter } from "../../models/todo-list-filter";
+import * as todoActions from "../../redux/actions/todo-actions";
+import { Button } from "../../shared-components/button";
+import { TextInput } from "../../shared-components/text-input";
 
 interface IProps {
   filters: IToDoListFilter;
-  onFilterChanges: (filter: Partial<IToDoListFilter>) => void;
-  onResetFilters: () => void;
+  setFilters?: (filters: Partial<IToDoListFilter>) => void;
+  resetFilters?: () => void;
 }
 
-export const SearchBar: React.FC<IProps> = (props) => {
-  const { onFilterChanges, filters, onResetFilters } = props;
+const SearchBarWithRedux: React.FC<IProps> = (props) => {
+  const { filters, setFilters = () => {}, resetFilters } = props;
 
   const createFilterValueHandler =
     (key: keyof IToDoListFilter) => (value?: any) => {
-      if (key === "label") {
-        onFilterChanges({ label: value || "" });
-      }
-
-      if (key === "onlyActive") {
-        onFilterChanges({ onlyActive: true, onlyDone: false });
-      }
-
-      if (key === "onlyDone") {
-        onFilterChanges({ onlyDone: true, onlyActive: false });
-      }
-
-      if (key === "onlyImportant") {
-        onFilterChanges({ onlyImportant: true });
+      switch (key) {
+        case "label": {
+          return setFilters({ label: value || "" });
+        }
+        case "onlyActive": {
+          return setFilters({ onlyActive: true, onlyDone: false });
+        }
+        case "onlyDone": {
+          return setFilters({ onlyDone: true, onlyActive: false });
+        }
+        case "onlyImportant": {
+          return setFilters({ onlyImportant: true });
+        }
       }
     };
 
@@ -42,11 +43,7 @@ export const SearchBar: React.FC<IProps> = (props) => {
         />
       </span>
       <span className="margin-left">
-        <Button
-          className="button-as-link"
-          value="All"
-          onClick={onResetFilters}
-        />
+        <Button className="button-as-link" value="All" onClick={resetFilters} />
       </span>
       <span className="margin-left">
         <Button
@@ -72,3 +69,11 @@ export const SearchBar: React.FC<IProps> = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state: IAppState): IProps => {
+  return {
+    filters: state.filters,
+  };
+};
+
+export default connect(mapStateToProps, todoActions)(SearchBarWithRedux);

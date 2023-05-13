@@ -1,0 +1,19 @@
+.header-container {
+  height: 400px;
+  position: relative;
+  background-image: url("../../../public/header-image.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.greeting {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: white;
+}

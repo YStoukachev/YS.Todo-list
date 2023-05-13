@@ -14,11 +14,12 @@ const App = () => {
     updateItem,
     filters,
     addItem,
+    clearCompletedTasks,
   } = useToDoList();
 
   return (
     <div className="App">
-      <Header key="header" />
+      <Header appStyleType="hooks" />
       <SearchBar
         onFilterChanges={setToDoFilters}
         filters={filters}
@@ -29,7 +30,10 @@ const App = () => {
         onDelete={deleteItem}
         onUpdate={updateItem}
       />
-      <AddTaskForm onSubmit={addItem} />
+      <AddTaskForm
+        onSubmit={addItem}
+        clearCompletedTasks={clearCompletedTasks}
+      />
     </div>
   );
 };

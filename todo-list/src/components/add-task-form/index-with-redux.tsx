@@ -1,28 +1,30 @@
-import { IToDoListItemModel } from "../../models/todo-list-item";
-import { TextInput } from "../../shared-components/text-input";
 import * as React from "react";
+import { connect } from "react-redux";
+import { IAppState } from "../../redux/app-state";
+import * as toDoListActions from "../../redux/actions/todo-actions";
+import { TextInput } from "../../shared-components/text-input";
+import { IToDoListItemModel } from "../../models/todo-list-item";
 import "./index.css";
 import { Button } from "../../shared-components/button";
 
 interface IProps {
-  onSubmit: (item: IToDoListItemModel) => void;
-  clearCompletedTasks: () => void;
+  addTask: (newItem: IToDoListItemModel) => void;
+  clearCompletedTasks?: () => void;
 }
 
-export const AddTaskForm: React.FC<IProps> = (props) => {
-  const { onSubmit, clearCompletedTasks } = props;
+const AddTaskFormWithRedux: React.FC<IProps> = (props) => {
+  const { addTask, clearCompletedTasks } = props;
   const [label, setLabel] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  const addTask = () => {
+  const onSumbit = () => {
     if (Boolean(label)) {
-      onSubmit({
+      addTask({
         id: crypto.randomUUID(),
+        done: false,
         label: label,
         important: false,
-        done: false,
       });
-
       setLabel("");
       setErrorMessage("");
     } else {
@@ -32,7 +34,7 @@ export const AddTaskForm: React.FC<IProps> = (props) => {
 
   const enterPressed = (keyCode: string) => {
     if (keyCode === "Enter" || keyCode === "NumpadEnter") {
-      addTask();
+      onSumbit();
     }
   };
 
@@ -61,3 +63,11 @@ export const AddTaskForm: React.FC<IProps> = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state: IAppState): IProps => {
+  return {
+    addTask: () => {},
+  };
+};
+
+export default connect(mapStateToProps, toDoListActions)(AddTaskFormWithRedux);

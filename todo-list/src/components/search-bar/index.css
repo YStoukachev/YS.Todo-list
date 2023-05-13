@@ -1,3 +1,22 @@
 .margin-left {
   margin-left: 20px;
 }
+
+.button-as-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  color: black;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.button-as-link:focus {
+  color: green;
+}
+
+.margin-top {
+  margin-top: 50px;
+}
