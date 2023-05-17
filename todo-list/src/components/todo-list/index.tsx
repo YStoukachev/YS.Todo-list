@@ -1,11 +1,16 @@
-import * as React from "react";
+import { useEffect } from "react";
 import { ToDoListItem } from "../todo-list-item";
 import "./index.css";
-import { useFilteredTaskList } from "../../redux/reducers/todo.reducer";
+import {
+  useFilteredTaskList,
+  useTodoListSetter,
+} from "../../redux/reducers/todo.reducer";
+import { useTodoLoader } from "../../hooks/to-do-list-loader.hook";
 
-interface IProps {}
-
-export const ToDoList: React.FC<IProps> = (props) => {
+export const ToDoList = () => {
+  const { getTodoList } = useTodoLoader();
+  const setTodoList = useTodoListSetter();
+  useEffect(() => setTodoList(getTodoList()), []);
   const { filteredTasks } = useFilteredTaskList();
 
   return (

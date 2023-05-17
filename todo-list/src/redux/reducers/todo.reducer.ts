@@ -46,11 +46,20 @@ const todoListSlice = createSlice({
     deleteCompletedTasks: (state) => {
       state.list = state.list.filter((x) => !x.done);
     },
+    setTodoList: (state, { payload }: { payload: ITask[] }) => {
+      state.list = payload;
+    },
   },
 });
 
-const { addTask, deleteTask, updateTask, updateFilters, deleteCompletedTasks } =
-  todoListSlice.actions;
+const {
+  addTask,
+  deleteTask,
+  updateTask,
+  updateFilters,
+  deleteCompletedTasks,
+  setTodoList,
+} = todoListSlice.actions;
 
 export const useTaskRemover = () => {
   const dispatcher = useAppDispatch();
@@ -137,6 +146,17 @@ export const useCompletedTaskRemover = () => {
   return useCallback(() => {
     dispatcher(deleteCompletedTasks());
   }, [dispatcher]);
+};
+
+export const useTodoListSetter = () => {
+  const dispatcher = useAppDispatch();
+
+  return useCallback(
+    (list: ITask[]) => {
+      dispatcher(setTodoList(list));
+    },
+    [dispatcher]
+  );
 };
 
 export default todoListSlice.reducer;

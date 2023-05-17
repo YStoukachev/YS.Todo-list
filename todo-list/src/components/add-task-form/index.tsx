@@ -1,5 +1,5 @@
 import { TextInput } from "../../shared-components/text-input";
-import * as React from "react";
+import { useState } from "react";
 import "./index.css";
 import { Button } from "../../shared-components/button";
 import {
@@ -7,14 +7,12 @@ import {
   useTaskAdder,
 } from "../../redux/reducers/todo.reducer";
 
-interface IProps {}
-
-export const AddTaskForm: React.FC<IProps> = (props) => {
+export const AddTaskForm = () => {
   const addTask = useTaskAdder();
   const clearCompletedTasks = useCompletedTaskRemover();
 
-  const [label, setLabel] = React.useState("");
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [label, setLabel] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const submitForm = () => {
     if (Boolean(label)) {

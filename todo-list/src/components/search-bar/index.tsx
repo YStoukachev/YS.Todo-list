@@ -1,4 +1,3 @@
-import * as React from "react";
 import { TextInput } from "../../shared-components/text-input";
 import { Button } from "../../shared-components/button";
 import "./index.css";
@@ -8,9 +7,7 @@ import {
   useFilteredTaskList,
 } from "../../redux/reducers/todo.reducer";
 
-interface IProps {}
-
-export const SearchBar: React.FC<IProps> = (props) => {
+export const SearchBar = () => {
   const { filters } = useFilteredTaskList();
   const updateFilters = useFilterUpdater();
 
