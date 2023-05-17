@@ -2,33 +2,34 @@ import * as React from "react";
 import { TextInput } from "../../shared-components/text-input";
 import { Button } from "../../shared-components/button";
 import "./index.css";
-import { IToDoListFilter } from "../../models/todo-list-filter";
+import {
+  ITaskFilter,
+  useFilterUpdater,
+  useFilteredTaskList,
+} from "../../redux/reducers/todo.reducer";
 
-interface IProps {
-  filters: IToDoListFilter;
-  onFilterChanges: (filter: Partial<IToDoListFilter>) => void;
-  onResetFilters: () => void;
-}
+interface IProps {}
 
 export const SearchBar: React.FC<IProps> = (props) => {
-  const { onFilterChanges, filters, onResetFilters } = props;
+  const { filters } = useFilteredTaskList();
+  const updateFilters = useFilterUpdater();
 
   const createFilterValueHandler =
-    (key: keyof IToDoListFilter) => (value?: any) => {
+    (key: keyof ITaskFilter) => (value?: any) => {
       if (key === "label") {
-        onFilterChanges({ label: value || "" });
+        updateFilters({ label: value || "" });
       }
 
       if (key === "onlyActive") {
-        onFilterChanges({ onlyActive: true, onlyDone: false });
+        updateFilters({ onlyActive: true, onlyDone: false });
       }
 
       if (key === "onlyDone") {
-        onFilterChanges({ onlyDone: true, onlyActive: false });
+        updateFilters({ onlyDone: true, onlyActive: false });
       }
 
       if (key === "onlyImportant") {
-        onFilterChanges({ onlyImportant: true });
+        updateFilters({ onlyImportant: true });
       }
     };
 
@@ -45,7 +46,7 @@ export const SearchBar: React.FC<IProps> = (props) => {
         <Button
           className="button-as-link"
           value="All"
-          onClick={onResetFilters}
+          onClick={() => updateFilters({})}
         />
       </span>
       <span className="margin-left">

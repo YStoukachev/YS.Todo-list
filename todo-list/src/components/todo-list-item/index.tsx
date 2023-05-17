@@ -1,20 +1,22 @@
 import * as React from "react";
 import { Button } from "../../shared-components/button";
-import { IToDoListItemModel } from "../../models/todo-list-item";
 import { CheckBox } from "../../shared-components/check-box";
 import "./index.css";
+import {
+  ITask,
+  useTaskRemover,
+  useTaskUpdater,
+} from "../../redux/reducers/todo.reducer";
 
 interface IProps {
-  item: IToDoListItemModel;
-  onDelete: (id: string) => void;
-  onUpdate: (
-    id: string,
-    newValue: Partial<Omit<IToDoListItemModel, "id">>
-  ) => void;
+  item: ITask;
 }
 
 export const ToDoListItem: React.FC<IProps> = (props) => {
-  const { item, onDelete, onUpdate } = props;
+  const { item } = props;
+
+  const deleteTask = useTaskRemover();
+  const updateTask = useTaskUpdater();
 
   const labelClassName = `margin-left col-md-3 ${
     item.important ? "red" : "black"
@@ -25,7 +27,7 @@ export const ToDoListItem: React.FC<IProps> = (props) => {
       <span>
         <CheckBox
           checked={item.done}
-          onChange={(done) => onUpdate(item.id, { done })}
+          onChange={(done) => updateTask({ ...item, done })}
         />
       </span>
       <span className={labelClassName}>{item.label}</span>
@@ -33,7 +35,7 @@ export const ToDoListItem: React.FC<IProps> = (props) => {
         <Button
           className="btn btn-danger"
           value="Delete"
-          onClick={() => onDelete(item.id)}
+          onClick={() => deleteTask(item.id)}
           isIcon={true}
           iconType="trash"
         />
@@ -42,7 +44,7 @@ export const ToDoListItem: React.FC<IProps> = (props) => {
         <Button
           className="btn btn-warning"
           value="Important"
-          onClick={() => onUpdate(item.id, { important: !item.important })}
+          onClick={() => updateTask({ ...item, important: !item.important })}
           isIcon={true}
           iconType="warning"
         />

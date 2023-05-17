@@ -1,23 +1,24 @@
-import { IToDoListItemModel } from "../../models/todo-list-item";
 import { TextInput } from "../../shared-components/text-input";
 import * as React from "react";
 import "./index.css";
 import { Button } from "../../shared-components/button";
+import {
+  useCompletedTaskRemover,
+  useTaskAdder,
+} from "../../redux/reducers/todo.reducer";
 
-interface IProps {
-  onSubmit: (item: IToDoListItemModel) => void;
-  clearCompletedTasks: () => void;
-}
+interface IProps {}
 
 export const AddTaskForm: React.FC<IProps> = (props) => {
-  const { onSubmit, clearCompletedTasks } = props;
+  const addTask = useTaskAdder();
+  const clearCompletedTasks = useCompletedTaskRemover();
+
   const [label, setLabel] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
 
-  const addTask = () => {
+  const submitForm = () => {
     if (Boolean(label)) {
-      onSubmit({
-        id: crypto.randomUUID(),
+      addTask({
         label: label,
         important: false,
         done: false,
@@ -32,7 +33,7 @@ export const AddTaskForm: React.FC<IProps> = (props) => {
 
   const enterPressed = (keyCode: string) => {
     if (keyCode === "Enter" || keyCode === "NumpadEnter") {
-      addTask();
+      submitForm();
     }
   };
 
@@ -50,7 +51,7 @@ export const AddTaskForm: React.FC<IProps> = (props) => {
         <span className="margin-left">
           <Button
             className="button-as-link"
-            value="Clear Complted"
+            value="Clear Completed"
             onClick={clearCompletedTasks}
           />
         </span>

@@ -1,31 +1,23 @@
 import * as React from "react";
 import { ToDoListItem } from "../todo-list-item";
-import { IToDoListItemModel } from "../../models/todo-list-item";
 import "./index.css";
+import { useFilteredTaskList } from "../../redux/reducers/todo.reducer";
 
-interface IProps {
-  toDoList: IToDoListItemModel[];
-  onDelete: (id: string) => void;
-  onUpdate: (id: string, item: Partial<Omit<IToDoListItemModel, "id">>) => void;
-}
+interface IProps {}
 
 export const ToDoList: React.FC<IProps> = (props) => {
-  const { toDoList = [], onDelete, onUpdate } = props;
+  const { filteredTasks } = useFilteredTaskList();
 
   return (
     <div className="margin-top">
       <ul className="list-group to-do-list-container">
-        {Boolean(toDoList.length) &&
-          toDoList.map((element) => (
+        {Boolean(filteredTasks.length) &&
+          filteredTasks.map((element) => (
             <li key={element.id} className="list-group-item">
-              <ToDoListItem
-                item={element}
-                onDelete={onDelete}
-                onUpdate={onUpdate}
-              />
+              <ToDoListItem item={element} />
             </li>
           ))}
-        {!Boolean(toDoList.length) && <div>There is nothing to do</div>}
+        {!Boolean(filteredTasks.length) && <div>There is nothing to do</div>}
       </ul>
     </div>
   );
