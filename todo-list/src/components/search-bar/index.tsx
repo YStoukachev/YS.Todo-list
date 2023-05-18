@@ -6,13 +6,14 @@ import {
   useFilterUpdater,
   useFilteredTaskList,
 } from "../../redux/reducers/todo.reducer";
+import React from "react";
 
 export const SearchBar = () => {
   const { filters } = useFilteredTaskList();
   const updateFilters = useFilterUpdater();
 
   const createFilterValueHandler =
-    (key: keyof ITaskFilter) => (value?: any) => {
+    (key: keyof ITaskFilter) => (value?: string) => {
       if (key === "label") {
         updateFilters({ label: value || "" });
       }

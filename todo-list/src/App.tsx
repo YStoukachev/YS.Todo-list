@@ -1,4 +1,5 @@
 import "./App.css";
+import React from "react";
 import { AddTaskForm } from "./components/add-task-form";
 import { Header } from "./components/header";
 import { SearchBar } from "./components/search-bar";

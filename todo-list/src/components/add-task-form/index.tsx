@@ -6,6 +6,7 @@ import {
   useCompletedTaskRemover,
   useTaskAdder,
 } from "../../redux/reducers/todo.reducer";
+import React from "react";
 
 export const AddTaskForm = () => {
   const addTask = useTaskAdder();
@@ -15,7 +16,7 @@ export const AddTaskForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const submitForm = () => {
-    if (Boolean(label)) {
+    if (label) {
       addTask({
         label: label,
         important: false,

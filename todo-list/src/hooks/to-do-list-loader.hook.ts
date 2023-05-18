@@ -8,7 +8,7 @@ export const useTodoLoader = () => {
     if (stringState !== null) {
       const tasks = JSON.parse(stringState) as ITask[];
 
-      return Boolean(tasks) ? tasks : [];
+      return tasks ? tasks : [];
     }
 
     return [];
