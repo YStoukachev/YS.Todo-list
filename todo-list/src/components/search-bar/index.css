@@ -13,10 +13,6 @@
   font-size: 18px;
 }
 
-.button-as-link:focus {
-  color: green;
-}
-
-.margin-top {
-  margin-top: 50px;
+.button-clicked {
+  color: rgb(122, 224, 224);
 }

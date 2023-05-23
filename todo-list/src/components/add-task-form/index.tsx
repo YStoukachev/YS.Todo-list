@@ -1,7 +1,6 @@
 import { TextInput } from "../../shared-components/text-input";
 import { useState } from "react";
 import "./index.css";
-import { Button } from "../../shared-components/button";
 import {
   useCompletedTaskRemover,
   useTaskAdder,
@@ -37,21 +36,14 @@ export const AddTaskForm = () => {
   };
 
   return (
-    <div className="margin-top">
+    <div className="add-task-form">
       <div>
         <span>
           <TextInput
-            placeHolder="Add some deal..."
+            placeHolder="Add some task..."
             value={label}
             onChange={setLabel}
             onKeyPressed={enterPressed}
-          />
-        </span>
-        <span className="margin-left">
-          <Button
-            className="button-as-link"
-            value="Clear Completed"
-            onClick={clearCompletedTasks}
           />
         </span>
       </div>

@@ -18,13 +18,13 @@ export const ToDoListItem: React.FC<IProps> = (props) => {
   const deleteTask = useTaskRemover();
   const updateTask = useTaskUpdater();
 
-  const labelClassName = `margin-left col-md-3 ${
+  const labelClassName = `margin-left to-do-label ${
     item.important ? "red" : "black"
   } ${item.done && "crossed"}`;
 
   return (
     <div className="row-container">
-      <span>
+      <span className="item-checkbox">
         <CheckBox
           checked={item.done}
           onChange={(done) => updateTask({ ...item, done })}

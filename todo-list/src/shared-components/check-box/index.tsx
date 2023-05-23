@@ -3,7 +3,7 @@ import "./index.css";
 
 interface IProps {
   checked: boolean;
-  onChange(newValue: boolean): void;
+  onChange: (newValue: boolean) => void;
 }
 
 export const CheckBox: React.FC<IProps> = (props) => {
