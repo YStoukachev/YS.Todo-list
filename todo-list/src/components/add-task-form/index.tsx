@@ -1,15 +1,11 @@
 import { TextInput } from "../../shared-components/text-input";
 import { useState } from "react";
 import "./index.css";
-import {
-  useCompletedTaskRemover,
-  useTaskAdder,
-} from "../../redux/reducers/todo.reducer";
+import { useTaskAdder } from "../../redux/reducers/todo.reducer";
 import React from "react";
 
 export const AddTaskForm = () => {
   const addTask = useTaskAdder();
-  const clearCompletedTasks = useCompletedTaskRemover();
 
   const [label, setLabel] = useState("");
   const [errorMessage, setErrorMessage] = useState("");

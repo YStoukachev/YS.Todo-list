@@ -25,32 +25,31 @@ export const SearchBar = () => {
   };
   const [dict, setDict] = React.useState<ButtonType>(defaultObject);
 
-  const createFilterValueHandler =
-    (key: keyof ITaskFilter) => (value?: string) => {
-      if (key === "onlyActive") {
-        updateFilters({ onlyActive: true, onlyDone: false });
-        setDict({
-          ...defaultObject,
-          active: true,
-        });
-      }
+  const createFilterValueHandler = (key: keyof ITaskFilter) => () => {
+    if (key === "onlyActive") {
+      updateFilters({ onlyActive: true, onlyDone: false });
+      setDict({
+        ...defaultObject,
+        active: true,
+      });
+    }
 
-      if (key === "onlyDone") {
-        updateFilters({ onlyDone: true, onlyActive: false });
-        setDict({
-          ...defaultObject,
-          done: true,
-        });
-      }
+    if (key === "onlyDone") {
+      updateFilters({ onlyDone: true, onlyActive: false });
+      setDict({
+        ...defaultObject,
+        done: true,
+      });
+    }
 
-      if (key === "onlyImportant") {
-        updateFilters({ onlyImportant: true });
-        setDict({
-          ...defaultObject,
-          important: true,
-        });
-      }
-    };
+    if (key === "onlyImportant") {
+      updateFilters({ onlyImportant: true });
+      setDict({
+        ...defaultObject,
+        important: true,
+      });
+    }
+  };
 
   return (
     <div className="search-bar">
