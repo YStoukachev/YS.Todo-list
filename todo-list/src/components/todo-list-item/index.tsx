@@ -2,11 +2,8 @@ import * as React from "react";
 import { Button } from "../../shared-components/button";
 import { CheckBox } from "../../shared-components/check-box";
 import "./index.css";
-import {
-  ITask,
-  useTaskRemover,
-  useTaskUpdater,
-} from "../../redux/reducers/todo.reducer";
+import { ITask } from "../../redux/reducers/todo.reducer";
+import { useTaskRemover, useTaskUpdater } from "../../redux/hooks/todo.hook";
 
 interface IProps {
   item: ITask;
@@ -33,20 +30,20 @@ export const ToDoListItem: React.FC<IProps> = (props) => {
       <span className={labelClassName}>{item.label}</span>
       <span className="margin-left">
         <Button
-          className="btn btn-danger"
-          value="Delete"
-          onClick={() => deleteTask(item.id)}
-          isIcon={true}
-          iconType="trash"
-        />
-      </span>
-      <span className="margin-left">
-        <Button
           className="btn btn-warning"
           value="Important"
           onClick={() => updateTask({ ...item, important: !item.important })}
           isIcon={true}
           iconType="warning"
+        />
+      </span>
+      <span className="margin-left">
+        <Button
+          className="btn btn-danger"
+          value="Delete"
+          onClick={() => deleteTask(item.id)}
+          isIcon={true}
+          iconType="trash"
         />
       </span>
     </div>

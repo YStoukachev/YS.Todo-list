@@ -1,11 +1,11 @@
 import { Button } from "../../shared-components/button";
 import "./index.css";
+import { ITaskFilter } from "../../redux/reducers/todo.reducer";
+import React from "react";
 import {
-  ITaskFilter,
   useCompletedTaskRemover,
   useFilterUpdater,
-} from "../../redux/reducers/todo.reducer";
-import React from "react";
+} from "../../redux/hooks/todo.hook";
 
 interface ButtonType {
   all: boolean;
@@ -14,7 +14,7 @@ interface ButtonType {
   important: boolean;
 }
 
-export const SearchBar = () => {
+export const SearchBar: React.FC = () => {
   const updateFilters = useFilterUpdater();
   const clearCompletedTasks = useCompletedTaskRemover();
   const defaultObject: ButtonType = {
@@ -23,7 +23,10 @@ export const SearchBar = () => {
     done: false,
     important: false,
   };
-  const [dict, setDict] = React.useState<ButtonType>(defaultObject);
+  const [dict, setDict] = React.useState<ButtonType>({
+    ...defaultObject,
+    all: true,
+  });
 
   const createFilterValueHandler = (key: keyof ITaskFilter) => () => {
     if (key === "onlyActive") {

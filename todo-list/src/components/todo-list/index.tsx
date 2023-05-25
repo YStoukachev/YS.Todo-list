@@ -1,11 +1,7 @@
 import { useEffect } from "react";
 import { ToDoListItem } from "../todo-list-item";
 import "./index.css";
-import {
-  useFilteredTaskList,
-  useTodoListSetter,
-} from "../../redux/reducers/todo.reducer";
-import { useTodoLoader } from "../../hooks/to-do-list-loader.hook";
+import { useTodoLoader } from "../../hooks/todo-list-loader.hook";
 import React from "react";
 import { SearchBar } from "../search-bar";
 import {
@@ -14,8 +10,12 @@ import {
   Draggable,
   DropResult,
 } from "react-beautiful-dnd";
+import {
+  useFilteredTaskList,
+  useTodoListSetter,
+} from "../../redux/hooks/todo.hook";
 
-export const ToDoList = () => {
+export const ToDoList: React.FC = () => {
   const { getTodoList } = useTodoLoader();
   const setTodoList = useTodoListSetter();
   // eslint-disable-next-line
@@ -65,10 +65,10 @@ export const ToDoList = () => {
               {!filteredTasks.length && (
                 <div className="empty-list">There is nothing to do</div>
               )}
+              {provided.placeholder}
               <li className="to-do-actions list-group-item">
                 <SearchBar />
               </li>
-              {provided.placeholder}
             </ul>
           )}
         </Droppable>

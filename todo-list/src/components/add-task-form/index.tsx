@@ -1,10 +1,10 @@
 import { TextInput } from "../../shared-components/text-input";
 import { useState } from "react";
 import "./index.css";
-import { useTaskAdder } from "../../redux/reducers/todo.reducer";
 import React from "react";
+import { useTaskAdder } from "../../redux/hooks/todo.hook";
 
-export const AddTaskForm = () => {
+export const AddTaskForm: React.FC = () => {
   const addTask = useTaskAdder();
 
   const [label, setLabel] = useState("");
