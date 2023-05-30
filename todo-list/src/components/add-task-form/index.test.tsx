@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import React from "react";
 import { AddTaskForm } from ".";
@@ -10,7 +10,7 @@ jest.mock("react", () => ({
   ...jest.requireActual("react"),
 }));
 
-const mockUseState = jest.spyOn(React, "useState");
+// const mockUseState = jest.spyOn(React, "useState");
 
 jest.mock("../../redux/hooks/todo.hook", () => ({
   ...jest.requireActual("../../redux/hooks/todo.hook"),

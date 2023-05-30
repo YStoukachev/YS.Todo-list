@@ -1,6 +1,7 @@
 import { fireEvent, render } from "@testing-library/react";
 import { ToDoListItem } from ".";
 import { ITask } from "../../redux/reducers/todo.reducer";
+import React from "react";
 
 const mockTaskRemover = jest.fn();
 const mockTaskUpdater = jest.fn();
