@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddTaskForm Render add task form 1`] = `
+exports[`AddTaskForm Should render add task form 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>

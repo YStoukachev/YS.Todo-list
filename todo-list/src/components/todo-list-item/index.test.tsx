@@ -24,13 +24,13 @@ describe("ToDoListItem", () => {
     jest.restoreAllMocks();
   });
 
-  test("Render todo list item", () => {
+  test("Should render todo list item", () => {
     const component = render(<ToDoListItem item={task} />);
 
     expect(component).toMatchSnapshot();
   });
 
-  test("Task marked as done", () => {
+  test("Should call update action when task marked as done", () => {
     const { getByRole } = render(<ToDoListItem item={task} />);
 
     fireEvent.click(getByRole("checkbox"));
@@ -38,11 +38,21 @@ describe("ToDoListItem", () => {
     expect(mockTaskUpdater).toHaveBeenCalled();
   });
 
-  test("Task marked as important", () => {
-    const { getAllByRole } = render(<ToDoListItem item={task} />);
+  test("Should call update action when task marked as important", () => {
+    const { container } = render(<ToDoListItem item={task} />);
+    const warningIcon = container.getElementsByClassName("warning")[0];
 
-    fireEvent.click(getAllByRole("button")[0]);
+    fireEvent.click(warningIcon);
 
     expect(mockTaskUpdater).toHaveBeenCalled();
+  });
+
+  test("Should call delete action when click to delete icon", () => {
+    const { container } = render(<ToDoListItem item={task} />);
+    const deleteIcon = container.getElementsByClassName("trash")[0];
+
+    fireEvent.click(deleteIcon);
+
+    expect(mockTaskRemover).toHaveBeenCalled();
   });
 });

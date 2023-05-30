@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CheckBox Render check box snapshot 1`] = `
+exports[`CheckBox Should render check box snapshot 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>

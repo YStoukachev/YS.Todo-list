@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button Render snapshot for button 1`] = `
+exports[`Button Should render snapshot for button 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
@@ -71,7 +71,7 @@ Object {
 }
 `;
 
-exports[`Button Render snapshot for button as icon 1`] = `
+exports[`Button Should render snapshot for button as icon 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>

@@ -1,38 +1,56 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ToDoListItem Should render todo list item 1`] = `
+exports[`SearchBar Should render search bar 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
       <div
-        class="row-container"
+        class="search-bar"
       >
         <span
-          class="item-checkbox"
+          class="margin-left"
         >
           <input
-            class="round-checkbox"
-            type="checkbox"
-          />
-        </span>
-        <span
-          class="margin-left to-do-label black false"
-        >
-          TodoListItem
-        </span>
-        <span
-          class="margin-left"
-        >
-          <span
-            class="warning"
+            class="button-as-link button-clicked"
+            type="button"
+            value="All"
           />
         </span>
         <span
           class="margin-left"
         >
-          <span
-            class="trash"
+          <input
+            class="button-as-link false"
+            type="button"
+            value="Active"
+          />
+        </span>
+        <span
+          class="margin-left"
+        >
+          <input
+            class="button-as-link false"
+            type="button"
+            value="Done"
+          />
+        </span>
+        <span
+          class="margin-left"
+        >
+          <input
+            class="button-as-link false"
+            type="button"
+            value="Important"
+          />
+        </span>
+        <span
+          class="margin-left"
+        >
+          <input
+            class="button-as-link"
+            type="button"
+            value="Clear Completed"
           />
         </span>
       </div>
@@ -40,33 +58,51 @@ Object {
   </body>,
   "container": <div>
     <div
-      class="row-container"
+      class="search-bar"
     >
       <span
-        class="item-checkbox"
+        class="margin-left"
       >
         <input
-          class="round-checkbox"
-          type="checkbox"
-        />
-      </span>
-      <span
-        class="margin-left to-do-label black false"
-      >
-        TodoListItem
-      </span>
-      <span
-        class="margin-left"
-      >
-        <span
-          class="warning"
+          class="button-as-link button-clicked"
+          type="button"
+          value="All"
         />
       </span>
       <span
         class="margin-left"
       >
-        <span
-          class="trash"
+        <input
+          class="button-as-link false"
+          type="button"
+          value="Active"
+        />
+      </span>
+      <span
+        class="margin-left"
+      >
+        <input
+          class="button-as-link false"
+          type="button"
+          value="Done"
+        />
+      </span>
+      <span
+        class="margin-left"
+      >
+        <input
+          class="button-as-link false"
+          type="button"
+          value="Important"
+        />
+      </span>
+      <span
+        class="margin-left"
+      >
+        <input
+          class="button-as-link"
+          type="button"
+          value="Clear Completed"
         />
       </span>
     </div>

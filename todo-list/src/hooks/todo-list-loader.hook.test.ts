@@ -33,7 +33,7 @@ describe("Todo list loader hooks", () => {
     window.localStorage.setItem(key, JSON.stringify(value));
   };
 
-  test("Get todo list from local storage", () => {
+  test("Should return todo list from local storage", () => {
     setLocalStorage(TODO_LIST_KEY, [defaultTask]);
 
     const { getTodoList } = useTodoLoader();

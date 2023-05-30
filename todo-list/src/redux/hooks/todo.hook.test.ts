@@ -3,7 +3,6 @@ import * as todoHooks from "./todo.hook";
 import * as storeHooks from "./store.hook";
 import React from "react";
 import { selectTodoFilters, selectTodoList } from "../selectors/todo.selector";
-import * as ReactRedux from "react-redux";
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -13,7 +12,6 @@ jest.mock("react-redux", () => ({
 const mockSelector = jest.spyOn(storeHooks, "useAppSelector");
 const mockUseMemo = jest.spyOn(React, "useMemo");
 const mockUseCallback = jest.spyOn(React, "useCallback");
-const mockUseAppDispatch = jest.spyOn(ReactRedux, "useDispatch");
 
 describe("Todo hooks", () => {
   const rootState: RootState = {
@@ -40,7 +38,7 @@ describe("Todo hooks", () => {
     mockUseMemo.mockRestore();
   });
 
-  test("useFilteredTaskList", () => {
+  test("Should return filters and tasks", () => {
     mockSelector.mockImplementation((selector) => {
       if (selector === selectTodoList) {
         return selectTodoList(rootState);
@@ -53,16 +51,5 @@ describe("Todo hooks", () => {
 
     expect(filters).toEqual({});
     expect(filteredTasks).toEqual(rootState.todoList.list);
-  });
-
-  test("useTaskRemover", () => {
-    const mockDispatch = jest.fn();
-    mockUseAppDispatch.mockReturnValue(mockDispatch);
-
-    const deleteTask = todoHooks.useTaskRemover();
-
-    deleteTask("1");
-
-    expect(mockUseAppDispatch).toHaveBeenCalledTimes(1);
   });
 });

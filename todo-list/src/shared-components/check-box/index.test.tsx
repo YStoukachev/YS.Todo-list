@@ -1,10 +1,10 @@
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import { CheckBox } from ".";
-import React from 'react';
+import React from "react";
 
 describe("CheckBox", () => {
-  test("Render check box", () => {
+  test("Should render check box", () => {
     const { getByRole } = render(
       <CheckBox checked={false} onChange={() => true} />
     );
@@ -12,7 +12,7 @@ describe("CheckBox", () => {
     expect(element).toBeInTheDocument();
   });
 
-  test("Render check box snapshot", () => {
+  test("Should render check box snapshot", () => {
     const component = render(
       <CheckBox checked={false} onChange={() => true} />
     );

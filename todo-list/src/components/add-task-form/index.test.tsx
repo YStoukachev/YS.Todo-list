@@ -1,16 +1,13 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import React from "react";
 import { AddTaskForm } from ".";
 
 const mockUseTaskAdder = jest.fn();
-// const mockUseState = jest.fn();
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
 }));
-
-// const mockUseState = jest.spyOn(React, "useState");
 
 jest.mock("../../redux/hooks/todo.hook", () => ({
   ...jest.requireActual("../../redux/hooks/todo.hook"),
@@ -22,25 +19,30 @@ describe("AddTaskForm", () => {
     jest.resetAllMocks();
   });
 
-  test("Render add task form", () => {
+  test("Should render add task form", () => {
     const component = render(<AddTaskForm />);
 
     expect(component).toMatchSnapshot();
   });
 
-  // test("Input string to text box", () => {
-  //   const mockSet = jest.fn();
+  test("Should call adding action when key pressed", () => {
+    const { getByRole } = render(<AddTaskForm />);
+    const textBox = getByRole("textbox");
 
-  //   mockUseState.mockImplementation(() => ["", mockSet]);
+    fireEvent.change(textBox, {
+      target: {
+        value: "Task label",
+      },
+    });
 
-  //   const { getByRole } = render(<AddTaskForm />);
+    fireEvent.keyUp(textBox, {
+      code: "Enter",
+    });
 
-  //   fireEvent.change(getByRole("textbox"), {
-  //     target: {
-  //       value: "Task label",
-  //     },
-  //   });
+    fireEvent.keyDown(textBox, {
+      code: "Enter",
+    });
 
-  //   expect(mockSet).toHaveBeenCalled();
-  // });
+    expect(mockUseTaskAdder).toHaveBeenCalled();
+  });
 });
