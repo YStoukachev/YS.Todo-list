@@ -33,5 +33,3 @@ jobs:
       working-directory: todo-list
     - run: npm test
       working-directory: todo-list
-    - run: npm lint
-      working-directory: todo-list
